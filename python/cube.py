@@ -47,7 +47,10 @@ class cube:
             fidx = (self.face_dic[face] + np.arange(6)) % 6
         else:
             fidx = (self.face_dic[face] + np.arange(6,0,-1)) % 6
-        self.data[fidx[0],:,:] = self.data[fidx[0],::-1,:].T
+        if l == 0:
+            self.data[fidx[0],:,:] = self.data[fidx[0],::-1,:].T
+        elif l == self.size - 1:
+            self.data[fidx[1],:,:] = self.data[fidx[1],:,::-1].T
         bak = self.data[fidx[2], :, il].copy()
         self.data[fidx[2], :, il] = self.data[fidx[5], ::-1, l]
         self.data[fidx[5], :, l] = self.data[fidx[3], il, :]
@@ -68,7 +71,10 @@ class cube:
             fidx = (self.face_dic[face] + np.arange(6)) % 6
         else:
             fidx = (self.face_dic[face] + np.arange(6,0,-1)) % 6
-        self.data[fidx[0],:,:] = self.data[fidx[0],:,::-1].T
+        if l == 0:
+            self.data[fidx[0],:,:] = self.data[fidx[0],:,::-1].T
+        elif l == self.size - 1:
+            self.data[fidx[1],:,:] = self.data[fidx[1],::-1,:].T
         bak = self.data[fidx[2], ::-1, il].copy()
         self.data[fidx[2], :, il] = self.data[fidx[4], l, :]
         self.data[fidx[4], l, :] = self.data[fidx[3], il, ::-1]
