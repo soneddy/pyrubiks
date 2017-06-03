@@ -13,12 +13,12 @@ import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
 class cube:
-    colors = ('w', 'y', 'm', 'r', 'c', 'b') # white, yellow, magenta, red, cyan, blue
+    colors = ('white', 'yellow', 'orange', 'red', 'skyblue', 'blue')
     faces = ('front', 'back', 'left', 'right', 'top', 'bottom')
     def __init__(self, n_shuffle=50, size=3):
         self.size = size
         self.face_dic = {self.faces[i]:i for i in range(len(self.faces))}
-        self.data = np.ones((6, size, size),dtype='int') * np.arange(6).reshape((6, 1, 1))
+        self.data = np.ones((len(self.faces), size, size),dtype='int') * np.arange(len(self.faces)).reshape((len(self.faces), 1, 1))
         self.shuffle(n_shuffle)
         return
     def shuffle(self, n_shuffle=20):
@@ -26,7 +26,7 @@ class cube:
             n_shuffle = 20
         for i in range(n_shuffle):
             ridx = np.random.randint(2)
-            fidx = np.random.randint(6)
+            fidx = np.random.randint(len(self.faces))
             lidx = np.random.randint((self.size + 1) // 2)
             if ridx == 0:
                 self.clockwise(self.faces[fidx], lidx)
@@ -44,9 +44,9 @@ class cube:
             l = self.size - 1
         il = self.size - 1 - l
         if (self.face_dic[face] % 2) == 0:
-            fidx = (self.face_dic[face] + np.arange(6)) % 6
+            fidx = (self.face_dic[face] + np.arange(len(self.faces))) % len(self.faces)
         else:
-            fidx = (self.face_dic[face] + np.arange(6,0,-1)) % 6
+            fidx = (self.face_dic[face] + np.arange(len(self.faces),0,-1)) % len(self.faces)
         if l == 0:
             self.data[fidx[0],:,:] = self.data[fidx[0],::-1,:].T
         elif l == self.size - 1:
@@ -68,9 +68,9 @@ class cube:
             l = self.size - 1
         il = self.size - 1 - l
         if (self.face_dic[face] % 2) == 0:
-            fidx = (self.face_dic[face] + np.arange(6)) % 6
+            fidx = (self.face_dic[face] + np.arange(len(self.faces))) % len(self.faces)
         else:
-            fidx = (self.face_dic[face] + np.arange(6,0,-1)) % 6
+            fidx = (self.face_dic[face] + np.arange(len(self.faces),0,-1)) % len(self.faces)
         if l == 0:
             self.data[fidx[0],:,:] = self.data[fidx[0],:,::-1].T
         elif l == self.size - 1:
